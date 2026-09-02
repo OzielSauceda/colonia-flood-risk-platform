@@ -1,0 +1,65 @@
+# Sentinel-1 RTC acquisition configuration.
+#
+# This file is the ONLY place event dates, search windows, and the
+# area-of-interest extent appear. Python modules contain no event dates.
+#
+# Dates are calendar dates in UTC. They are resolved at query time to half-open
+# instant ranges [start T00:00:00Z, (end + 1 day) T00:00:00Z). The resolved
+# instants are recorded explicitly in each generated manifest.
+
+schema_version = "1"
+
+[aoi.hidalgo_county]
+name       = "Hidalgo County, Texas"
+fips       = "48215"
+source     = "US Census TIGERweb State_County MapServer, layer 1 (Counties)"
+source_url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+retrieved  = "2026-09-02"
+# EPSG:4326 decimal degrees, derived from the TIGERweb polygon for GEOID 48215.
+bbox       = [-98.586444, 26.036268, -97.861684, 26.783081]
+
+[catalog]
+name         = "Microsoft Planetary Computer STAC"
+url          = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection   = "sentinel-1-rtc"
+vv_asset_key = "vv"
+vh_asset_key = "vh"
+
+# ---------------------------------------------------------------------------
+# Hurricane Hanna, 2020
+# ---------------------------------------------------------------------------
+# Rainfall event bounds are taken from the NWS Brownsville event page, which
+# reports its rainfall accumulation period as "7 AM July 24 - 7 AM July 29".
+# They are NOT derived from the satellite acquisition date.
+[[events]]
+event_id                  = "hanna_2020"
+event_name                = "Hurricane Hanna, 2020"
+aoi                       = "hidalgo_county"
+event_start               = 2020-07-24
+event_end                 = 2020-07-29
+event_source              = "NWS Brownsville/Rio Grande Valley — Hurricane Hanna event page"
+event_source_url          = "https://www.weather.gov/bro/2020event_hanna"
+event_source_retrieved    = "2026-09-02"
+pre_event_window          = { start = 2020-06-24, end = 2020-07-23 }
+observation_window        = { start = 2020-07-26, end = 2020-07-28 }
+preferred_relative_orbit  = 143
+preferred_orbit_direction = "descending"
+
+# ---------------------------------------------------------------------------
+# March 2025 Hidalgo County flood
+# ---------------------------------------------------------------------------
+# Rainfall event bounds are taken from the NWS Brownsville event summary
+# "March 26-28, 2025 Historic Flooding/QLCS Event".
+[[events]]
+event_id                  = "march_2025"
+event_name                = "March 26-28, 2025 Rio Grande Valley historic flooding"
+aoi                       = "hidalgo_county"
+event_start               = 2025-03-26
+event_end                 = 2025-03-28
+event_source              = "NWS Brownsville/Rio Grande Valley — March 26-28, 2025 Historic Flooding/QLCS event summary"
+event_source_url          = "https://www.weather.gov/media/bro/wxevents/2025/pdf/March_26to28_HistoricFlooding_QLCS.pdf"
+event_source_retrieved    = "2026-09-02"
+pre_event_window          = { start = 2025-02-24, end = 2025-03-25 }
+observation_window        = { start = 2025-03-26, end = 2025-03-28 }
+preferred_relative_orbit  = 143
+preferred_orbit_direction = "descending"

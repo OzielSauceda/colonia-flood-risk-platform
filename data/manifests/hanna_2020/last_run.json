@@ -1,0 +1,17 @@
+{
+  "acquisition_count": 14,
+  "catalog_url": "https://planetarycomputer.microsoft.com/api/stac/v1",
+  "client_library_versions": {
+    "pydantic": "2.13.5",
+    "pystac": "1.15.2",
+    "pystac-client": "0.9.0"
+  },
+  "config_sha256": "736f45596646555387c49c9b9566744ea976b4228f538eaad18a2af0a2ca8885",
+  "excluded_count": 0,
+  "git_commit": "90b274b657a629b6c10b0958d124bf3818bfc28f",
+  "manifest_bytes": 26277,
+  "manifest_sha256": "ed19ba81345ce7f984c46bdd76fd7633c3f0bd34cb8ceebdedd033b1f2be91fd",
+  "retrieved_at_utc": "2026-09-02T16:36:03.394825Z",
+  "schema_version": "1",
+  "tool_version": "0.1.0"
+}
