@@ -191,7 +191,10 @@ Colonia boundaries are also ingested, for overlay display.
 
 **No specific data provider, product, or file has been selected.** The
 following describes what each input must supply. Source selection is **[OPEN]**
-and tracked in section 13.
+and tracked in section 13. Section 5.4 names Sentinel-1 RTC as a *candidate
+under evaluation*, which is not a selection: it is authorized only for the
+label prototype in section 11, and it becomes an MVP input only if that
+prototype passes its gate.
 
 ### 5.1 Rainfall
 
@@ -224,8 +227,25 @@ and tracked in section 13.
 - **Required only if** the labeled-target path in section 11 is taken.
 - Must supply georeferenced observations of documented flooding or standing
   water that can be associated with both a location and a time.
-- **[OPEN]** Whether any such source exists at usable coverage and quality for
-  Hidalgo County. This is the single most consequential unknown in the MVP.
+- **[PROVISIONAL]** The candidate source under evaluation is **Sentinel-1 RTC
+  radar observations**, compared between a multi-date pre-event baseline and an
+  event-window acquisition to derive per-cell surface-inundation labels. This
+  is an **experimental label-construction path**, not an ingested observation
+  dataset. No agency publishes these as flood observations; the labels would be
+  derived by committed code from the radar scenes, and every mask, threshold,
+  and version in that derivation is part of the label definition.
+- **[OPEN]** **No satellite-derived label has been accepted as model ground
+  truth.** Whether this path yields defensible labels is decided by the
+  prototype gate in section 11, which has not been evaluated. This remains the
+  single most consequential unknown in the MVP, and until the gate is
+  evaluated, section 5.4 supplies no input to any model.
+- **[CONFIRMED]** NWS/IEM Local Storm Reports are retained as **supplemental
+  corroboration and qualitative validation only** — checking a derived
+  positive against a known impact, prioritizing manual review, and documenting
+  reporting bias. They are **not** used as a complete positive/negative
+  training target. They are presence-only: absence of a report is not evidence
+  of no flooding.
+- Supporting decision record: `docs/research/label-feasibility.md`.
 
 ### 5.5 Requirements applying to every input
 
@@ -448,6 +468,10 @@ Each requirement is independently verifiable.
 
 - **F22.** The section 11 label-feasibility decision is recorded in the
   repository, with its evidence, before any model or index is implemented.
+  The completed review and its prototype authorization are recorded in
+  `docs/research/label-feasibility.md`; the final Path A / Path B decision
+  remains pending the prototype gate and is recorded in the same document
+  when it is made.
 - **F23.** The value-producing step (trained model under Path A, or scoring
   formula under Path B) runs as a committed, re-runnable script that writes its
   output to the database.
@@ -701,10 +725,34 @@ been evaluated offline is not an acceptable MVP deliverable. Required:
 
 ### Current state
 
-**[OPEN]** The feasibility assessment **has not been performed**. Path A and
-Path B are both live. Everything in this document that depends on the outcome
-is tagged accordingly, and the architecture is designed so that only the
-value-producing step and the associated labeling differ between paths.
+**[CONFIRMED]** The decision procedure above has been carried out. An
+independent label-feasibility review is **complete** and recorded in
+`docs/research/label-feasibility.md`. That review:
+
+- **rejected NWS/IEM Local Storm Reports as a standalone supervised-learning
+  target.** They are presence-only, spatially coarse, and reporting-biased, and
+  the archive states it is neither complete nor official. They fail the
+  "usable negatives" criterion above and are retained only as supplemental
+  corroboration (5.4);
+- **authorized one time-boxed Sentinel-1 satellite-label prototype** as the
+  remaining way to test Path A, on the condition that the target is narrowed to
+  *satellite-observed persistent surface inundation*. Section 6.1's target is
+  amended to that narrower wording only if the prototype passes;
+- **fixed a pass/fail acceptance gate** for that prototype, covering event
+  count, surviving positive rows, colonia coverage, the negative rule, a
+  stratified manual audit, threshold stability, and held-out storm selection.
+  The gate is not weakened after results are seen.
+
+**[OPEN]** **The prototype has not been built, and its gate has not been
+evaluated.** Path A and Path B therefore both remain live. Nothing in this
+document asserts that defensible training labels exist. If every gate criterion
+passes, the MVP proceeds down Path A with the narrowed target; if any criterion
+fails, the MVP takes Path B and the satellite work is retained as a documented
+research extension.
+
+Everything in this document that depends on the outcome is tagged accordingly,
+and the architecture is designed so that only the value-producing step and the
+associated labeling differ between paths.
 
 ## 12. MVP acceptance criteria
 
@@ -714,7 +762,10 @@ a binary check.
 **Decision and documentation**
 
 - [ ] **A1.** The section 11 feasibility decision is recorded in `docs/`, with
-      the sources examined and the reasoning.
+      the sources examined and the reasoning. The completed review and its
+      prototype authorization satisfy this; the final Path A / Path B outcome
+      is still pending and is recorded in the same document once the prototype
+      gate is evaluated.
 - [ ] **A2.** The data-source register (5.5) is committed and complete for every
       dataset actually used.
 - [ ] **A3.** The chosen cell size and the resulting Hidalgo County cell count
@@ -808,11 +859,14 @@ a binary check.
 
 Ordered by how much they block the work.
 
-### Blocking — must be resolved before implementation
+### Blocking — must be resolved before model or Path A implementation
 
-1. **Do defensible historical flood labels exist for Hidalgo County?**
-   Determines Path A vs. Path B (section 11). Everything downstream depends on
-   it. **Owner and target date: unassigned.**
+1. **Does the Sentinel-1 satellite-label prototype pass the fixed acceptance
+   gate in `docs/research/label-feasibility.md`?** Determines Path A vs.
+   Path B (section 11). Everything downstream depends on it. If any gate
+   criterion fails, the project takes Path B, and the gate is not weakened
+   after the results are seen. **Owner: Oziel Sauceda. Must be resolved before
+   model training or any Path A implementation begins.**
 2. **Which rainfall data source, and in what form?** Historical event totals,
    design-storm depths, or user-selected scenarios (5.1).
 3. **Which DEM source, and at what native resolution?** Its resolution bounds
