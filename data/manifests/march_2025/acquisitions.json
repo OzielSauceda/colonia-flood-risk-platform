@@ -1,0 +1,825 @@
+{
+  "acquisitions": [
+    {
+      "bbox": [
+        -100.138981,
+        25.619849,
+        -97.290495,
+        27.65739
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-02-24T12:32:37.193238Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -97.570003,
+              26.074149
+            ],
+            [
+              -97.290495,
+              27.369847
+            ],
+            [
+              -98.14284,
+              27.514089
+            ],
+            [
+              -98.156383,
+              27.45089
+            ],
+            [
+              -99.035718,
+              27.594004
+            ],
+            [
+              -99.047549,
+              27.536313
+            ],
+            [
+              -99.820967,
+              27.65739
+            ],
+            [
+              -100.138981,
+              26.032273
+            ],
+            [
+              -97.66593,
+              25.619849
+            ],
+            [
+              -97.570003,
+              26.074149
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250224T123222_20250224T123251_058038_072A52_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "descending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 41,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/2/24/IW/DV/S1A_IW_GRDH_1SDV_20250224T123222_20250224T123251_058038_072A52_6801/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/2/24/IW/DV/S1A_IW_GRDH_1SDV_20250224T123222_20250224T123251_058038_072A52_6801/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -98.218549,
+        24.894295,
+        -95.389148,
+        26.932572
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-03T12:24:35.508210Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -95.677184,
+              25.302016
+            ],
+            [
+              -95.389148,
+              26.644265
+            ],
+            [
+              -96.235098,
+              26.788672
+            ],
+            [
+              -96.249086,
+              26.725515
+            ],
+            [
+              -97.120759,
+              26.86882
+            ],
+            [
+              -97.133385,
+              26.810861
+            ],
+            [
+              -97.902122,
+              26.932572
+            ],
+            [
+              -98.218549,
+              25.307755
+            ],
+            [
+              -95.764995,
+              24.894295
+            ],
+            [
+              -95.677184,
+              25.302016
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250303T122421_20250303T122450_058140_072E75_rtc",
+      "matches_preferred_orbit": true,
+      "orbit_direction": "descending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 143,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/3/IW/DV/S1A_IW_GRDH_1SDV_20250303T122421_20250303T122450_058140_072E75_E039/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/3/IW/DV/S1A_IW_GRDH_1SDV_20250303T122421_20250303T122450_058140_072E75_E039/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -100.567981,
+        24.321565,
+        -97.816315,
+        26.23676
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-06T00:42:25.015298Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -99.002764,
+              24.534543
+            ],
+            [
+              -97.816315,
+              24.730597
+            ],
+            [
+              -98.108769,
+              26.23676
+            ],
+            [
+              -100.567981,
+              25.827926
+            ],
+            [
+              -100.386608,
+              25.203173
+            ],
+            [
+              -100.398369,
+              25.14672
+            ],
+            [
+              -100.22918,
+              24.321565
+            ],
+            [
+              -99.002764,
+              24.534543
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250306T004212_20250306T004237_058177_073005_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "ascending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 5,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/6/IW/DV/S1A_IW_GRDH_1SDV_20250306T004212_20250306T004237_058177_073005_9B94/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/6/IW/DV/S1A_IW_GRDH_1SDV_20250306T004212_20250306T004237_058177_073005_9B94/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -100.900039,
+        25.827972,
+        -98.106613,
+        27.743191
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-06T00:42:50.015741Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -99.339643,
+              26.037672
+            ],
+            [
+              -98.106613,
+              26.237153
+            ],
+            [
+              -98.397853,
+              27.743191
+            ],
+            [
+              -100.900039,
+              27.335569
+            ],
+            [
+              -100.567931,
+              25.827972
+            ],
+            [
+              -99.339643,
+              26.037672
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250306T004237_20250306T004302_058177_073005_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "ascending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 5,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/6/IW/DV/S1A_IW_GRDH_1SDV_20250306T004237_20250306T004302_058177_073005_726B/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/6/IW/DV/S1A_IW_GRDH_1SDV_20250306T004237_20250306T004302_058177_073005_726B/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -100.1392,
+        25.619852,
+        -97.290698,
+        27.657208
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-08T12:32:37.401100Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -97.570198,
+              26.074512
+            ],
+            [
+              -97.290698,
+              27.369849
+            ],
+            [
+              -98.143143,
+              27.514091
+            ],
+            [
+              -98.156787,
+              27.450892
+            ],
+            [
+              -99.036022,
+              27.594004
+            ],
+            [
+              -99.047853,
+              27.536132
+            ],
+            [
+              -99.82127,
+              27.657208
+            ],
+            [
+              -100.1392,
+              26.034348
+            ],
+            [
+              -97.666229,
+              25.619852
+            ],
+            [
+              -97.570198,
+              26.074512
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250308T123222_20250308T123251_058213_073176_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "descending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 41,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/8/IW/DV/S1A_IW_GRDH_1SDV_20250308T123222_20250308T123251_058213_073176_2598/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/8/IW/DV/S1A_IW_GRDH_1SDV_20250308T123222_20250308T123251_058213_073176_2598/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -98.852253,
+        25.864386,
+        -96.057983,
+        27.781003
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-13T00:34:36.958303Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -96.99609,
+              26.124457
+            ],
+            [
+              -96.057983,
+              26.275133
+            ],
+            [
+              -96.349671,
+              27.781003
+            ],
+            [
+              -98.852253,
+              27.373513
+            ],
+            [
+              -98.529458,
+              25.864386
+            ],
+            [
+              -96.99609,
+              26.124457
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250313T003424_20250313T003449_058279_073411_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "ascending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 107,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/13/IW/DV/S1A_IW_GRDH_1SDV_20250313T003424_20250313T003449_058279_073411_7B29/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/13/IW/DV/S1A_IW_GRDH_1SDV_20250313T003424_20250313T003449_058279_073411_7B29/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -98.219246,
+        24.894398,
+        -95.389861,
+        26.932486
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-15T12:24:35.647577Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -95.677541,
+              25.303467
+            ],
+            [
+              -95.389861,
+              26.643922
+            ],
+            [
+              -96.23571,
+              26.788323
+            ],
+            [
+              -96.2497,
+              26.725076
+            ],
+            [
+              -97.121371,
+              26.868377
+            ],
+            [
+              -97.133889,
+              26.810777
+            ],
+            [
+              -97.902727,
+              26.932486
+            ],
+            [
+              -98.219246,
+              25.307487
+            ],
+            [
+              -95.765586,
+              24.894398
+            ],
+            [
+              -95.677541,
+              25.303467
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250315T122421_20250315T122450_058315_07357C_rtc",
+      "matches_preferred_orbit": true,
+      "orbit_direction": "descending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 143,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/15/IW/DV/S1A_IW_GRDH_1SDV_20250315T122421_20250315T122450_058315_07357C_2ECD/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/15/IW/DV/S1A_IW_GRDH_1SDV_20250315T122421_20250315T122450_058315_07357C_2ECD/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -100.567981,
+        24.321654,
+        -97.816413,
+        26.23676
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-18T00:42:25.190328Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -99.003258,
+              24.534543
+            ],
+            [
+              -97.816413,
+              24.730688
+            ],
+            [
+              -98.108769,
+              26.23676
+            ],
+            [
+              -100.567981,
+              25.827926
+            ],
+            [
+              -100.386608,
+              25.203173
+            ],
+            [
+              -100.398471,
+              25.14699
+            ],
+            [
+              -100.22928,
+              24.321654
+            ],
+            [
+              -99.003258,
+              24.534543
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250318T004212_20250318T004237_058352_0736EF_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "ascending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 5,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/18/IW/DV/S1A_IW_GRDH_1SDV_20250318T004212_20250318T004237_058352_0736EF_3FF2/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/18/IW/DV/S1A_IW_GRDH_1SDV_20250318T004212_20250318T004237_058352_0736EF_3FF2/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -100.900039,
+        25.827972,
+        -98.106713,
+        27.743191
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-18T00:42:50.189953Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -99.340143,
+              26.037581
+            ],
+            [
+              -98.106713,
+              26.237153
+            ],
+            [
+              -98.397954,
+              27.743191
+            ],
+            [
+              -100.900039,
+              27.335569
+            ],
+            [
+              -100.567931,
+              25.827972
+            ],
+            [
+              -99.340143,
+              26.037581
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250318T004237_20250318T004302_058352_0736EF_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "ascending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 5,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/18/IW/DV/S1A_IW_GRDH_1SDV_20250318T004237_20250318T004302_058352_0736EF_E67D/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/18/IW/DV/S1A_IW_GRDH_1SDV_20250318T004237_20250318T004302_058352_0736EF_E67D/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -100.13988,
+        25.619858,
+        -97.291405,
+        27.657204
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-20T12:32:37.681685Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -97.570902,
+              26.074158
+            ],
+            [
+              -97.291405,
+              27.369858
+            ],
+            [
+              -98.143751,
+              27.514095
+            ],
+            [
+              -98.157291,
+              27.451166
+            ],
+            [
+              -99.036529,
+              27.594275
+            ],
+            [
+              -99.048359,
+              27.536132
+            ],
+            [
+              -99.821979,
+              27.657204
+            ],
+            [
+              -100.13988,
+              26.032266
+            ],
+            [
+              -97.666926,
+              25.619858
+            ],
+            [
+              -97.570902,
+              26.074158
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250320T123223_20250320T123252_058388_07385C_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "descending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 41,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/20/IW/DV/S1A_IW_GRDH_1SDV_20250320T123223_20250320T123252_058388_07385C_F2AE/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/20/IW/DV/S1A_IW_GRDH_1SDV_20250320T123223_20250320T123252_058388_07385C_F2AE/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -98.850938,
+        25.864381,
+        -96.056781,
+        27.781162
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-25T00:34:36.930270Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -96.994589,
+              26.124526
+            ],
+            [
+              -96.056781,
+              26.275199
+            ],
+            [
+              -96.348551,
+              27.781162
+            ],
+            [
+              -98.850938,
+              27.373692
+            ],
+            [
+              -98.528061,
+              25.864381
+            ],
+            [
+              -96.994589,
+              26.124526
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250325T003424_20250325T003449_058454_073AF9_rtc",
+      "matches_preferred_orbit": false,
+      "orbit_direction": "ascending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 107,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/25/IW/DV/S1A_IW_GRDH_1SDV_20250325T003424_20250325T003449_058454_073AF9_87DA/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/25/IW/DV/S1A_IW_GRDH_1SDV_20250325T003424_20250325T003449_058454_073AF9_87DA/measurement/iw-vv.rtc.tiff",
+      "window": "pre_event"
+    },
+    {
+      "bbox": [
+        -98.218849,
+        24.894297,
+        -95.389234,
+        26.933024
+      ],
+      "collection": "sentinel-1-rtc",
+      "datetime_utc": "2025-03-27T12:24:35.740182Z",
+      "event_id": "march_2025",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              -95.677276,
+              25.302288
+            ],
+            [
+              -95.389234,
+              26.644718
+            ],
+            [
+              -96.235288,
+              26.789127
+            ],
+            [
+              -96.249377,
+              26.725972
+            ],
+            [
+              -97.121054,
+              26.869275
+            ],
+            [
+              -97.133178,
+              26.811219
+            ],
+            [
+              -97.902219,
+              26.933024
+            ],
+            [
+              -98.218849,
+              25.307395
+            ],
+            [
+              -95.765094,
+              24.894297
+            ],
+            [
+              -95.677276,
+              25.302288
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "intersects_aoi_bbox": true,
+      "item_id": "S1A_IW_GRDH_1SDV_20250327T122421_20250327T122450_058490_073C61_rtc",
+      "matches_preferred_orbit": true,
+      "orbit_direction": "descending",
+      "platform": "SENTINEL-1A",
+      "polarizations": [
+        "VH",
+        "VV"
+      ],
+      "relative_orbit": 143,
+      "vh_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/27/IW/DV/S1A_IW_GRDH_1SDV_20250327T122421_20250327T122450_058490_073C61_6C2F/measurement/iw-vh.rtc.tiff",
+      "vv_asset_href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/3/27/IW/DV/S1A_IW_GRDH_1SDV_20250327T122421_20250327T122450_058490_073C61_6C2F/measurement/iw-vv.rtc.tiff",
+      "window": "event"
+    }
+  ],
+  "config_sha256": "736f45596646555387c49c9b9566744ea976b4228f538eaad18a2af0a2ca8885",
+  "counts": {
+    "acquisitions": 12,
+    "event": 1,
+    "excluded": 0,
+    "pre_event": 11
+  },
+  "event": {
+    "event_end": "2025-03-28",
+    "event_id": "march_2025",
+    "event_name": "March 26-28, 2025 Rio Grande Valley historic flooding",
+    "event_source": "NWS Brownsville/Rio Grande Valley — March 26-28, 2025 Historic Flooding/QLCS event summary",
+    "event_source_retrieved": "2026-09-02",
+    "event_source_url": "https://www.weather.gov/media/bro/wxevents/2025/pdf/March_26to28_HistoricFlooding_QLCS.pdf",
+    "event_start": "2025-03-26"
+  },
+  "excluded": [],
+  "query": {
+    "aoi": {
+      "bbox": [
+        -98.586444,
+        26.036268,
+        -97.861684,
+        26.783081
+      ],
+      "fips": "48215",
+      "name": "Hidalgo County, Texas",
+      "retrieved": "2026-09-02",
+      "source": "US Census TIGERweb State_County MapServer, layer 1 (Counties)",
+      "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+    },
+    "catalog_name": "Microsoft Planetary Computer STAC",
+    "catalog_url": "https://planetarycomputer.microsoft.com/api/stac/v1",
+    "collection": "sentinel-1-rtc",
+    "preferred_orbit_direction": "descending",
+    "preferred_relative_orbit": 143,
+    "window_bounds_convention": "half-open: [start, end)",
+    "windows": {
+      "event": {
+        "end": "2025-03-29T00:00:00.000000Z",
+        "start": "2025-03-26T00:00:00.000000Z"
+      },
+      "pre_event": {
+        "end": "2025-03-26T00:00:00.000000Z",
+        "start": "2025-02-24T00:00:00.000000Z"
+      }
+    }
+  },
+  "schema_version": "1"
+}
