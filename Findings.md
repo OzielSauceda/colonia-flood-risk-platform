@@ -171,3 +171,159 @@ No git commit was created. `docs/mvp.md` was not modified. Generated manifests
 live in `data/manifests/`, which is *not* gitignored (only `data/raw/` and
 `data/processed/` are), so they are committable — the plan recommended
 committing them so rerun determinism is reviewable in diffs.
+
+---
+
+## 2026-09-05 — Acquisition-manifest review follow-up
+
+**Scope and starting state.** Reviewed the acquisition-manifest implementation
+on `feat/sentinel-acquisition-manifest`, HEAD `8b9452d` ("Build Sentinel-1
+acquisition manifest pipeline"). The branch matched its local remote-tracking
+ref. Local `origin/main` does not contain this commit or the preceding
+feasibility/documentation commits `c60414f` and `90b274b`. No fetch or remote PR
+status check was performed, so this does not establish the current server-side
+merge state. Initial tracked files were clean; `prompt.md` and
+`docs/data-sources.md` were already untracked and have been preserved.
+
+Read the README, MVP, feasibility review, acquisition plan, prior findings,
+project configuration, client and relevant tests. No applicable `AGENTS.md`
+was found in the repository or ancestor directories. The acquisition plan is a
+historical proposal: its greenfield and uncommitted-feasibility statements are
+superseded by the implementation and commits above.
+
+### Verified defect and smallest fix
+
+`PystacSearchClient.__init__` accepted and stored `timeout`, but `search()`
+called `Client.open(self._catalog_url)` without forwarding it. Inspection of
+the installed **pystac-client 0.9.0** confirmed that `Client.open` supports the
+`timeout` keyword directly. The runtime fix is one line:
+
+```python
+client = Client.open(self._catalog_url, timeout=self._timeout)
+```
+
+No new dependency or custom transport is needed. The exact path, verified in
+the installed dependency source, is:
+
+1. `config/events.toml` supplies the catalog URL. There is **no TOML timeout
+   field or CLI timeout flag**. `cli.run()` constructs
+   `PystacSearchClient(config.catalog.url)` and therefore uses
+   `DEFAULT_TIMEOUT_SECONDS = 60`. Python callers can override the constructor
+   keyword, e.g. `timeout=7`.
+2. The constructor stores that value in `self._timeout`; `search()` forwards it
+   to `Client.open`, which forwards it to `Client.from_file`.
+3. `Client.from_file` constructs `StacApiIO(timeout=timeout)` for the initial
+   catalog read. `ItemSearch` reuses the client's I/O instance; its page
+   iterator uses that same instance for the first search page and next links.
+4. `StacApiIO.request` calls
+   `self.session.send(prepped, timeout=self.timeout, **send_kwargs)`.
+
+**What this bounds.** The scalar is seconds for both connection establishment
+(per connection attempt) and read inactivity (waiting for incoming bytes), on
+catalog discovery and each search-page request. It is **not** a wall-clock
+deadline for a whole response, a paginated search, or a CLI run. Continued byte
+arrival, multiple connection attempts, retries and their delays, pagination,
+DNS resolution, and local processing can extend elapsed time beyond the value.
+The library's existing retry policy is unchanged. Transport failures still
+surface through the existing `CatalogError` wrapper.
+
+The public [PySTAC Client API](https://pystac-client.readthedocs.io/en/stable/api.html#pystac_client.Client.open)
+documents the keyword, and [Requests timeout documentation](https://requests.readthedocs.io/en/latest/user/advanced/#timeouts)
+defines its connect/read semantics. Installed source was the authority for the
+API used by this fix; the online stable API page identifies itself as 0.8.5.
+
+**Regression coverage.** Added a parameterized offline test in
+`tests/test_manifest.py` for the default 60 seconds and a custom 7 seconds. It
+replaces `pystac_client.Client.open`, checks the exact URL and timeout keyword,
+and returns captured item dictionaries through the adapter. The existing
+autouse socket blocker remains active. Both cases failed on the original code
+because the keyword was absent, then passed with the fix. This test verifies
+our forwarding boundary; dependency internals were inspected, not exercised
+against a live service.
+
+**Unused constant.** Repository search found `REQUIRED_POLARIZATIONS` only at
+its declaration in `src/colonia_flood/acquisitions.py`; removed it. The existing
+VV/VH declaration checks and configured asset-key validation remain in place.
+
+### Exact verification commands and results
+
+Commands ran from the repository root using native CPython 3.13.2 in `.venv`,
+with pytest 9.1.1 and the existing `pyproject.toml` settings.
+
+| Command | Result |
+|---|---|
+| `.\.venv\Scripts\python.exe -m pytest tests/test_manifest.py -k test_client_forwards_timeout_to_catalog_open -q` | Before fix: **2 failed, 25 deselected**, exit 1, both failures show missing timeout keyword. After fix: **2 passed, 25 deselected**, exit 0. |
+| `.\.venv\Scripts\python.exe -m pytest --basetemp=.pytest-tmp/acquisition-review-20260905` | First attempt: **62 passed, 6 deselected, 34 setup errors**, exit 1; `.pytest-tmp` parent was absent (`WinError 3`). After creating the parent: **96 passed, 6 deselected**, exit 0. |
+| `New-Item -ItemType Directory -Path .pytest-tmp -Force \| Out-Null` | Created the ignored temporary-directory parent before the successful suite rerun. The review-specific child directory did not previously exist. |
+| `.\.venv\Scripts\python.exe -m ruff check .` | **All checks passed**, exit 0. |
+| `.\.venv\Scripts\python.exe -m mypy` | **Success: no issues found in 15 source files**, exit 0; `strict = true` and `warn_unreachable = true` are configured in `pyproject.toml`. |
+| `git diff --check` | **Passed**, exit 0; only Git's LF-to-CRLF conversion notices. |
+
+Final SHA-256 checks confirmed both pre-existing untracked files were unchanged.
+
+Live catalog tests were not run; they remain deselected by project defaults.
+The prior findings' live results are historical evidence, not results from
+this review. No manifests were regenerated, rasters downloaded, labels created,
+or model work started. No commit, push, or merge was performed.
+
+### MVP status and merge readiness
+
+The MVP already states that the independent review is complete, one Sentinel-1
+prototype is authorized, its quality gate remains unevaluated, and both paths
+remain unresolved. Corrected two inconsistencies in `docs/mvp.md`: the opening
+of section 11's current-state paragraph no longer implies that the entire
+decision procedure (including choosing a path) has finished; A1 is checked to
+match its existing text that the committed review and authorization satisfy
+that documentation criterion. Its final-path outcome remains explicitly pending.
+
+The reported timeout defect and unused constant are resolved locally, and the
+required offline checks pass. **Before merging, the existing data-source
+register needs review and inclusion in the branch**: `docs/data-sources.md` is
+untracked despite the README linking to it and MVP section 5.5/A2 requiring a
+committed register. Its contents were left untouched. These review changes also
+remain uncommitted as requested; current remote PR/merge status must be checked
+when merge work is authorized. The label-quality gate does not block merging
+this upstream metadata slice.
+
+### Unchanged label-quality gate and next-slice requirements
+
+The authority remains `docs/research/label-feasibility.md`, "Pass/fail gate".
+Path A requires **all** of the following; failure of any criterion selects
+Path B, without weakening the gate after observing results:
+
+- At least **three independent storms** with usable labels.
+- At least **100 positive grid-event rows** after quality filtering, across
+  multiple areas rather than one contiguous water body.
+- At least **20 colonia-intersecting cells** with valid event observations;
+  report colonia coverage even when no positives are detected.
+- Negatives require at least **90% valid observed area** within a cell and
+  exclude permanent water, clouds/no-data, and ambiguous change.
+- A stratified manual audit of at least **100 labeled cell-events** achieves
+  at least **80% positive-class precision**; retain protocol and disagreements.
+- Material stability under reasonable water-fraction and radar-change threshold
+  variations.
+- One entire storm reserved as the final test event; no random splitting of
+  neighboring cells across train and test.
+- Target and UI wording explicitly identify **satellite-observed persistent
+  inundation**, not general flood occurrence or safety risk.
+
+The approximately one-week prototype starts with Hanna 2020 and March 2025;
+2018/2019 are added only after that pipeline is deterministic. **Two events
+alone cannot satisfy the three-event gate.** Acquisition metadata also does not
+prove dry baselines, usable observed area, or label quality.
+
+Before the next slice can produce defensible labels, reconcile the prototype's
+500 m grid with the MVP's provisional 250–500 m range and input-resolution
+justification; select the projected CRS, rainfall, DEM, and colonia sources;
+and specify acquisition-window/footprint adequacy and dry baseline selection.
+The prototype must use same-orbit VV/VH, a multi-date pre-event median,
+permanent/seasonal-water, terrain, land-cover and valid-observation masks, and
+an established cited classifier or OPERA-compatible logic. It must preserve
+analysis-resolution transforms, provenance, confidence and `unknown` labels,
+with reproducible tests for masks and thresholds and corroborating validation.
+
+Exact water-fraction/radar-change thresholds, confidence rules, manual-audit
+sampling and disagreement handling, and the quantitative interpretation of
+"materially stable" remain to be specified. No new values were chosen in this
+review. Asset-access requirements and source terms must be resolved for the
+retained inputs; anonymous metadata search does not prove raster access.

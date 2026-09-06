@@ -725,8 +725,8 @@ been evaluated offline is not an acceptable MVP deliverable. Required:
 
 ### Current state
 
-**[CONFIRMED]** The decision procedure above has been carried out. An
-independent label-feasibility review is **complete** and recorded in
+**[CONFIRMED]** The independent label-feasibility review is **complete**;
+the final model-path decision remains pending. The review is recorded in
 `docs/research/label-feasibility.md`. That review:
 
 - **rejected NWS/IEM Local Storm Reports as a standalone supervised-learning
@@ -761,7 +761,7 @@ a binary check.
 
 **Decision and documentation**
 
-- [ ] **A1.** The section 11 feasibility decision is recorded in `docs/`, with
+- [x] **A1.** The section 11 feasibility decision is recorded in `docs/`, with
       the sources examined and the reasoning. The completed review and its
       prototype authorization satisfy this; the final Path A / Path B outcome
       is still pending and is recorded in the same document once the prototype

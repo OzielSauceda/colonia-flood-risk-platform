@@ -1,8 +1,8 @@
 """The single seam between this package and the network.
 
 Nothing above this module knows that HTTP exists. Unit tests substitute a fake
-implementation of :class:`SearchClient` and therefore never touch the network;
-only the optional live test constructs :class:`PystacSearchClient`.
+implementation of :class:`SearchClient`; offline adapter tests substitute the
+underlying catalog entry point. Only the optional live tests use the network.
 
 This module performs *metadata search only*. It never requests an asset href and
 never signs a URL, so no raster byte is transferred and no credential is used.
@@ -68,6 +68,11 @@ class PystacSearchClient:
     ``pystac-client`` is used specifically because STAC search pagination fails
     *quietly* when hand-rolled: a truncated result set yields a manifest that
     looks correct and is wrong.
+
+    ``timeout`` is in seconds and applies to connection establishment and read
+    inactivity for each HTTP request, including catalog discovery and search
+    pages. It is not a wall-clock deadline for a request or the complete search;
+    retries and pagination can extend the total elapsed time.
     """
 
     def __init__(
@@ -90,7 +95,7 @@ class PystacSearchClient:
             raise CatalogError(f"pystac-client is not installed: {exc}") from exc
 
         try:
-            client = Client.open(self._catalog_url)
+            client = Client.open(self._catalog_url, timeout=self._timeout)
             search = client.search(
                 collections=[collection],
                 bbox=list(bbox),

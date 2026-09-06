@@ -10,6 +10,7 @@ import re
 from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
@@ -241,6 +242,37 @@ def test_malformed_response_raises_catalog_error_not_key_error(
     unkeyed.pop("id")
     with pytest.raises(CatalogError):
         collect_event([unkeyed], config=config, event_id="hanna_2020")
+
+
+@pytest.mark.parametrize(
+    ("timeout", "expected_timeout"), [(None, 60), (7, 7)], ids=["default", "custom"]
+)
+def test_client_forwards_timeout_to_catalog_open(
+    monkeypatch: pytest.MonkeyPatch, timeout: int | None, expected_timeout: int
+) -> None:
+    import pystac_client
+
+    catalog_url = "https://example.invalid/api/stac/v1"
+    items = load_stac_fixture("hanna_2020__event")
+    catalog = Mock()
+    catalog.search.return_value.items_as_dicts.return_value = iter(items)
+    open_catalog = Mock(return_value=catalog)
+    monkeypatch.setattr(pystac_client.Client, "open", open_catalog)
+    client = (
+        PystacSearchClient(catalog_url)
+        if timeout is None
+        else PystacSearchClient(catalog_url, timeout=timeout)
+    )
+
+    result = client.search(
+        collection="sentinel-1-rtc",
+        bbox=[-1.0, -1.0, 1.0, 1.0],
+        start=datetime(2020, 7, 26, tzinfo=UTC),
+        end_exclusive=datetime(2020, 7, 29, tzinfo=UTC),
+    )
+
+    open_catalog.assert_called_once_with(catalog_url, timeout=expected_timeout)
+    assert result == items
 
 
 def test_client_wraps_transport_failures_as_catalog_error(

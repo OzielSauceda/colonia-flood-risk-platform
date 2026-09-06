@@ -26,8 +26,6 @@ from .stac_client import CatalogError, to_rfc3339
 COORDINATE_PRECISION = 6
 """Decimal places retained for every coordinate. ~0.1 m at this latitude."""
 
-REQUIRED_POLARIZATIONS = ("VH", "VV")
-
 
 class ReasonCode(StrEnum):
     """Why a catalog item was not retained. Values are stable manifest content."""
