@@ -12,6 +12,10 @@ license = { text = "MIT" }
 dependencies = [
     "pydantic>=2.6,<3",
     "pystac-client>=0.8,<0.10",
+    "shapely>=2.1.2,<3",
+    "pyproj>=3.7,<4",
+    # Keep dependency stubs compatible with the project's Python 3.11 mypy target.
+    "numpy>=2.1,<2.4",
 ]
 
 [project.optional-dependencies]
@@ -19,6 +23,7 @@ dev = [
     "pytest>=8.0",
     "ruff>=0.6",
     "mypy>=1.11",
+    "types-shapely>=2.1,<3",
 ]
 
 [project.scripts]

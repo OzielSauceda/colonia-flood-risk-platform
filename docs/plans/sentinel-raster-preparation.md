@@ -1,7 +1,9 @@
 # Plan — Sentinel-1 raster preparation
 
-**Status:** Planning and investigation only. Nothing in this document has been
-implemented.
+**Status:** Stages A and B implemented; stopped before Stage C for review.
+See `sentinel-stage-a-review.md` and `sentinel-stage-b-review.md` for actual
+changes and checks. Investigation measurements below retain their historical
+context; later stages remain proposed.
 **Investigation date:** 2026-09-06
 **Revised:** 2026-09-07 — see "Revision note" below.
 **Branch:** `feat/sentinel-raster-preparation`
@@ -1035,7 +1037,8 @@ right tool for shipping.
 - **Typing:** rasterio ships no `py.typed`, so `mypy --strict` will need an
   `ignore_missing_imports` override for `rasterio.*` in `pyproject.toml`. That
   override is scoped to the third-party import only and does not loosen strict
-  checking of our own code. shapely and pyproj do ship type information.
+  checking of our own code. pyproj ships type information; installed Shapely
+  2.1.2 requires separate `types-shapely` dev stubs (Stage B verification).
 
 **[PROPOSED] Sequencing:** add rasterio at **Stage C** (§17) — the stage that
 implements `raster_profile.py` — because that is where production raster
@@ -1092,6 +1095,24 @@ not a test to relax** — and the exact result supersedes the number printed in
 
 Required by rasterio and by shapely's vectorised paths; `2.5.2` resolves for
 this interpreter. Arrives with Stage B. Not a separate decision.
+
+**Stage B implementation verification — 2026-09-07.** Installed Shapely 2.1.2,
+pyproj 3.8.0 and NumPy 2.3.5 in the CPython 3.13 project environment. Runtime
+ranges are `shapely>=2.1.2,<3`, `pyproj>=3.7,<4`, `numpy>=2.1,<2.4`.
+pyproj 3.8 requires Python >=3.12, so the range permits the 3.7 line for the
+project's supported Python 3.11. Shapely pulls NumPy transitively; its explicit
+bound is necessary here because initially resolved NumPy 2.5.3 stubs use Python
+3.12 syntax and failed the unchanged Python 3.11 mypy target. The 2.1–2.3 line
+supports that target and CPython 3.13 wheels. Installed Shapely has no `py.typed`;
+`types-shapely>=2.1,<3` is a dev dependency, resolved to 2.1.0.20260728. No mypy
+ignore or strictness relaxation was added. The earlier version-resolution notes
+are investigation history, not the final compatibility constraints.
+
+The exact Stage B three-scene fractions are 0.18108366695891062 (Hanna) and
+0.18168297400827138 (March), within the 0.0002 absolute-fraction migration
+regression budget of the 200 m sampled estimates. These are STAC-footprint
+metrics, not valid-pixel coverage. See the Stage B review for full metrics,
+tolerance rationale, and limits of the projected polygon calculation.
 
 ### 12.5 Not recommended
 
