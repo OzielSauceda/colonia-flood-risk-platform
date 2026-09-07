@@ -1,0 +1,41 @@
+{
+  "cell_id_rule": "utm14_500:<column>:<row>; lower-left=(column*500,row*500) m",
+  "colonia_source_sha256": "17302574bd121d859981ef51cbbd8a0caa65fc051c97ec54cf8f523db8b9f238",
+  "county_boundary_sha256": "42a988e52aa1962050971d19fbd721e75944a46354bb03f7c8c0cf4f8fb1d70f",
+  "events": {
+    "hanna_2020": {
+      "candidate_upper_bound": 418,
+      "fully_inside_upper_bound": 401,
+      "gate_threshold": 20,
+      "geometric_upper_bound_below_threshold": false,
+      "outside_count": 1231,
+      "partial_upper_bound": 17,
+      "selected_item_ids": [
+        "S1A_IW_GRDH_1SDV_20200703T122410_20200703T122439_033290_03DB66_rtc",
+        "S1A_IW_GRDH_1SDV_20200715T122411_20200715T122440_033465_03E0BD_rtc",
+        "S1A_IW_GRDH_1SDV_20200727T122412_20200727T122441_033640_03E61B_rtc"
+      ]
+    },
+    "march_2025": {
+      "candidate_upper_bound": 419,
+      "fully_inside_upper_bound": 403,
+      "gate_threshold": 20,
+      "geometric_upper_bound_below_threshold": false,
+      "outside_count": 1230,
+      "partial_upper_bound": 16,
+      "selected_item_ids": [
+        "S1A_IW_GRDH_1SDV_20250303T122421_20250303T122450_058140_072E75_rtc",
+        "S1A_IW_GRDH_1SDV_20250315T122421_20250315T122450_058315_07357C_rtc",
+        "S1A_IW_GRDH_1SDV_20250327T122421_20250327T122450_058490_073C61_rtc"
+      ]
+    }
+  },
+  "grid_anchoring_rule": "Edges at integer multiples of 500 m from UTM (0, 0).",
+  "grid_crs": "EPSG:32614",
+  "grid_size_metres": 500,
+  "interpretation": "STAC footprint intersection does NOT establish valid raster observations. Stage H can only reduce this count when inspecting valid-pixel masks. An upper bound below 20 rules out this necessary Path-A criterion; 20 or more only means Path A is not ruled out, not that any gate passed. Counts are conditional on the selected OAG colonia source snapshot and vintage.",
+  "is_upper_bound": true,
+  "schema_version": "colonia-viability-f2-v1",
+  "total_county_grid_cells": 16820,
+  "total_unique_colonia_intersecting_cells": 1649
+}
