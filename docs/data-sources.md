@@ -5,13 +5,15 @@
 with source name, publisher, access method, retrieval date, native CRS, native
 resolution, license or terms of use, and known limitations.
 
-This register covers acquisition metadata and the **Stage A county polygon
-snapshot**. Neither of these ingestion steps downloads raster assets, and no
+This register covers acquisition metadata, the **Stage A county polygon
+snapshot**, and the **Stage F1 colonia polygon snapshot**. These ingestion
+steps do not download raster assets, and no
 dataset below has yet been ingested
 into a database or used to produce any modeled value.
 
-**[OPEN]** Rainfall, DEM, and colonia-boundary sources remain unselected
-(`docs/mvp.md` §13, questions 2–4). They are added here when they are chosen.
+**[OPEN]** Rainfall and DEM sources remain unselected
+(`docs/mvp.md` §13). They are added here when they are chosen.
+The colonia-boundary source is selected and recorded in §5 below.
 
 ---
 
@@ -175,3 +177,46 @@ actually retrieved, a full register entry is added here first.
 
 Access method of record:
 [Iowa Environmental Mesonet archived LSRs](https://mesonet.agron.iastate.edu/request/gis/lsrs.phtml).
+
+---
+
+## 5. Hidalgo colonias — OAG geographic database, Stage F1 snapshot
+
+| Field | Value |
+|---|---|
+| Source name / publisher | Texas Office of the Attorney General (OAG), Colonia Geographic Database / Texas Colonias Viewer |
+| Authoritative entry point | [OAG Open Reports and Publications, Colonias](https://www.texasattorneygeneral.gov/open-government/open-reports-and-publications) directly links the application below and identifies the database as OAG-maintained. |
+| Provenance chain | Application `1bc9c4f7b1da47dd8fc535fbd17dc060` → web map `d820fc1df66f44ceac8bf88dabc44468` → Feature Service item `f1405427feea43d28bc6c994c32aa3ae`. The map labels this layer `Colonias`. |
+| Exact service / layer | [communities FeatureServer, layer 0](https://services9.arcgis.com/8EiW1jmucmoP1yM9/arcgis/rest/services/communities/FeatureServer/0?f=pjson), layer name `communities`, `esriGeometryPolygon` |
+| Inspected ArcGIS owners | Application and map: `oaglts`; service item: `todd.giberson`. The latter account's institutional role is not established by item metadata; authority follows the official OAG link and application configuration. |
+| Access / selection | Public, anonymously queried; `COUNTYNAME='HIDALGO'` under the service's case-insensitive collation, `outFields=*`, `outSR=4326`, `returnGeometry=true`, `orderByFields=FID ASC`, `f=geojson`. No spatial selection, clipping, generalization or precision parameter. |
+| Retrieval date | 2026-09-07 |
+| Source vintage | Service item modified 2021-03-22 18:48:20 UTC; layer data/schema last edit 2021-03-22 19:30:53.157 UTC. Map modified 2025-04-15 16:53:14 UTC. These are metadata/edit dates, not certified survey dates or event-year coverage. |
+| Native/service CRS | Esri WKID `102100`, latest WKID `3857` (WGS 84 / Pseudo-Mercator), metres; original pre-publication CRS not stated. |
+| Retrieved / committed CRS | EPSG:4326 longitude/latitude, requested from the service; source response's `crs` member retained. |
+| Native resolution | Vector polygons; no raster resolution. Positional accuracy not specified. |
+| License / terms | OAG's linked open-data page encourages reuse and states its publications are not copyright-protected. Application/map/service item license fields are null/empty; layer/service copyright and description fields are empty. No named dataset-specific license, attribution clause or additional use restriction was supplied in inspected metadata. Retain OAG attribution and these qualifications. |
+| Feature count / identity | 846 features; system-maintained `FID` is unique/nonblank and equals GeoJSON feature `id`. `MNUMBER` and `MNUMBER_1` are also unique/nonblank in this snapshot. Preserve all 145 returned attributes per feature. Name fields: `COLONIA_NM`, `COMM_NM`; county fields: `COUNTYNAME`, `COUNTY`. |
+| Repository input | `data/boundaries/colonias.geojson` — explicitly acquired source snapshot for review, not an automatic runtime download |
+| File size / SHA-256 | 2,431,551 bytes; `17302574bd121d859981ef51cbbd8a0caa65fc051c97ec54cf8f523db8b9f238` |
+| Geometry inventory | 846 valid, nonempty Polygons; 0 MultiPolygons; 1 interior ring; 6,058 finite 2D coordinate positions including ring closures. No source polygon extends outside the committed county polygon. |
+| Snapshot extent | `[-98.5826393750855, 26.0646999136896, -97.8688114087686, 26.5042730701565]` in EPSG:4326 |
+
+**Known limitations.** This named OAG registry is not a guarantee of exhaustive,
+current or historical colonia coverage. Definitions of **colonia differ between
+administrative registries**; all future Stage F counts are conditional on this
+**named source and vintage**, including its polygon boundaries. Item modification
+dates do not establish when individual communities were surveyed. One `SUBD_ID`
+is blank, and `TWDB_ID` has 20 blanks and 30 duplicated nonblank values; neither
+is a safe unique key. Names are unique but `COMM_NM` and `COLONIA_NM` differ in
+six records. No values were repaired, normalized, discarded or dissolved.
+Source infrastructure/population attributes remain provenance data, not verified
+current conditions or flood labels. Service `FID` stability across republishing
+is not guaranteed; retain item/layer identity and the snapshot hash together.
+
+The [Stage F1 source review](plans/sentinel-stage-f1-source-review.md) records
+the complete reproduction request, metadata findings, identity exceptions,
+geometry checks and whitespace-only normalization. Coordinate numeric values,
+numeric spellings, attributes and array ordering were verified unchanged from
+the service response. This source acquisition does not implement a 500 m grid,
+calculate colonia/Sentinel overlap counts, or establish valid raster observations.
