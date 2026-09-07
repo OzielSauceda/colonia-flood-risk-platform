@@ -5,8 +5,9 @@
 with source name, publisher, access method, retrieval date, native CRS, native
 resolution, license or terms of use, and known limitations.
 
-This register currently covers the **metadata-acquisition slice only**. No
-raster asset has been downloaded, and no dataset below has yet been ingested
+This register covers acquisition metadata and the **Stage A county polygon
+snapshot**. Neither of these ingestion steps downloads raster assets, and no
+dataset below has yet been ingested
 into a database or used to produce any modeled value.
 
 **[OPEN]** Rainfall, DEM, and colonia-boundary sources remain unselected
@@ -60,28 +61,72 @@ A failure indicates that the catalog behavior needs investigation.
 
 ---
 
-## 2. Hidalgo County boundary extent — query area of interest
+## 2. Hidalgo County boundary — query extent and tracked polygon
 
 | Field | Value |
 |---|---|
 | Source name | TIGERweb State_County MapServer, layer 1 (Counties) |
 | Publisher | US Census Bureau |
 | Access method | `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1`, queried for `GEOID = 48215` with `outSR=4326` |
-| Retrieval date | 2026-09-02 |
+| Retrieval date | Extent: 2026-09-02; full polygon snapshot: 2026-09-07 |
 | Native/service CRS and retrieved CRS | The service advertises EPSG:3857 (Esri WKID 102100). Our query requests EPSG:4326 using `outSR=4326`, so the retrieved coordinates and derived bounding box use longitude and latitude. |
 | Native resolution | Vector polygon; not a raster product |
-| License / terms | US Census Bureau TIGER/Line products are in the public domain |
+| License / terms | Public-domain Census Bureau material; the Bureau permits reproduction and requests source attribution (technical documentation §1.6, linked below). TIGER/Line is a registered Census Bureau trademark. |
+| County identifier | GEOID `48215` (Texas `48`, Hidalgo `215`); source `NAME`: `Hidalgo County` |
+| Service vintage | January 1, 2026, as advertised by layer 1 when checked on 2026-09-07; not a historical event-year boundary |
+| Repository input | `data/boundaries/hidalgo_county.geojson`, prepared for version control in Stage A |
+| Committed-file CRS | EPSG:4326, longitude then latitude in decimal degrees, requested with `outSR=4326` |
+| Source integrity | One `FeatureCollection` feature, `Polygon`, one closed ring, 4,132 coordinate positions including closure; `AREALAND = 4069433006` m², `AREAWATER = 30081128` m² |
 
-**Derived value in use.** Only the bounding box of the returned polygon is used,
+**Derived value in use.** Acquisition discovery uses the bounding box,
 recorded in `config/events.toml` as
 `[-98.586444, 26.036268, -97.861684, 26.783081]` (west, south, east, north).
 
 **Known limitations.** A bounding box is a rectangle, not the county. It
 deliberately over-covers: any acquisition intersecting the rectangle is
 enumerated, and clipping to the actual county polygon is a later concern. The
-full polygon geometry is **not** yet committed anywhere in this repository —
-this slice needs only the extent. The polygon itself becomes a tracked dataset
-when gridding begins (`docs/mvp.md` A4).
+full polygon snapshot is now a tracked project input for the future
+`coverage.py` consumer, which will need the county outline for spatial
+intersection and county-area calculations. No coverage calculation is performed
+in Stage A. The polygon alone establishes no valid raster observations.
+
+### Snapshot provenance and reproduction
+
+Source: U.S. Census Bureau,
+[TIGERweb State_County, layer 1 (Counties)](https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1?f=pjson).
+Reproduce the one-time, anonymous GET using this query:
+
+```text
+https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query?where=GEOID%3D%2748215%27&outFields=GEOID,NAME,AREALAND,AREAWATER&returnGeometry=true&outSR=4326&f=geojson
+```
+
+No geometry precision, generalization, or simplification parameter was supplied.
+The reviewed response was 168,672 bytes, SHA-256
+`25cdbcbec6b08881533038c72aa7033341e8135744199aa7e06a756d92da63dd`.
+The snapshot preserves all returned fields, coordinate values, their numeric
+text, and array ordering. Only whitespace was normalized: a newline between
+coordinate positions and one final newline. No retrieval timestamp or local
+metadata was inserted into the GeoJSON. Decimal-preserving JSON comparison
+against the downloaded response verifies that formatting changed no values.
+
+The raw derived bbox is
+`[-98.58644400000378, 26.03626800000421, -97.86168400042897, 26.783080999883026]`.
+Normalizing only these four values to the config's six-decimal precision yields
+`[-98.586444, 26.036268, -97.861684, 26.783081]`, matching `config/events.toml`.
+This validation does not round any polygon vertex or introduce a wider tolerance.
+
+Network I/O occurred only during explicit ingestion and source-document review.
+Normal future processing reads the version-controlled local snapshot. A future
+boundary update requires another explicit retrieval and reviewed diff; there is
+no automatic refresh command or runtime download path. The endpoint can change
+over time, so retaining the snapshot makes calculations reproducible against
+fixed input rather than assuming a later query returns identical data.
+
+Licensing and limitations: [Census TIGER/Line technical documentation,
+§§1.5–1.6](https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc.pdf)
+states that Census materials may be reproduced with requested source attribution.
+It also explains that statistical boundaries are not legal land descriptions.
+This citation supports reuse terms, not the snapshot's 2026 vintage.
 
 ---
 
