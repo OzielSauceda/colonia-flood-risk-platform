@@ -14,6 +14,8 @@ dependencies = [
     "pystac-client>=0.8,<0.10",
     "shapely>=2.1.2,<3",
     "pyproj>=3.7,<4",
+    # 1.4 supports Python 3.11; 1.5 requires Python >=3.12.
+    "rasterio>=1.4.4,<1.6",
     # Keep dependency stubs compatible with the project's Python 3.11 mypy target.
     "numpy>=2.1,<2.4",
 ]
@@ -64,4 +66,8 @@ files = ["src", "tests"]
 
 [[tool.mypy.overrides]]
 module = ["pystac_client.*", "pystac.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["rasterio.*"]
 ignore_missing_imports = true

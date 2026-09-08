@@ -1,9 +1,9 @@
 # Plan — Sentinel-1 raster preparation
 
-**Status:** Stages A and B implemented; stopped before Stage C for review.
-See `sentinel-stage-a-review.md` and `sentinel-stage-b-review.md` for actual
-changes and checks. Investigation measurements below retain their historical
-context; later stages remain proposed.
+**Status:** Stages A/B/F1/F2 reviewed; Stage C1 MemoryFile spike completed,
+stopped before C2 for review. See `sentinel-stage-c1-rasterio-spike.md` for the
+bounded-prefix result and dependency versions. Earlier investigation
+measurements below retain their historical context; later stages remain proposed.
 **Investigation date:** 2026-09-06
 **Revised:** 2026-09-07 — see "Revision note" below.
 **Branch:** `feat/sentinel-raster-preparation`
@@ -109,7 +109,10 @@ Both manifests share `config_sha256`
 both cases it is the relative-orbit-143 descending scene. There is no
 alternative event-window observation in the committed manifests.
 
-### 1.4 Dependencies today **[VERIFIED]**
+### 1.4 Dependencies at investigation time **[VERIFIED — 2026-09-06]**
+
+Historical state; superseded by the Stage B dependency results in §12.4 and
+the [Stage C1 installation results](sentinel-stage-c1-rasterio-spike.md).
 
 `pyproject.toml`: runtime `pydantic>=2.6,<3`, `pystac-client>=0.8,<0.10`; dev
 `pytest>=8.0`, `ruff>=0.6`, `mypy>=1.11`. `requires-python = ">=3.11"`; ruff and
@@ -991,6 +994,12 @@ dropped.
 
 ## 12. Dependency recommendations **[PROPOSED]**
 
+The starting point, version-resolution notes and sequencing proposals below
+describe the historical investigation as of 2026-09-06. Current dependencies
+are recorded in the Stage B implementation note in §12.4 and the
+[Stage C1 results](sentinel-stage-c1-rasterio-spike.md); statements that nothing
+was installed are historical, not the current environment.
+
 ### 12.1 Verified starting point
 
 `pyproject.toml` declares only `pydantic` and `pystac-client` at runtime
@@ -1051,7 +1060,7 @@ parsing code ever enters the repository. The cost is real — a GDAL/PROJ pair i
 the install from Stage C onward, and the §15.3 network-isolation problem binding
 at Stage C instead of Stage G.
 
-**[UNRESOLVED]** Whether rasterio can open the **truncated** 128 KiB header
+**[UNRESOLVED at the original investigation; C1 result below]** Whether rasterio can open the **truncated** 128 KiB header
 range through `MemoryFile` cleanly, or whether it needs the full file via
 `/vsicurl`. COGs place their IFDs and `GDALMetadata` at the front, so a
 header-only open is expected to work for metadata, but GDAL may emit warnings or
@@ -1060,6 +1069,16 @@ it (nothing was installed). **Stage C must resolve this empirically before
 committing to the `MemoryFile` route in §15.3**; if it fails, the fallback is
 `/vsicurl` with the isolation mitigation (b) of §15.3, and that choice must be
 recorded rather than defaulted into.
+
+**[VERIFIED — C1, 2026-09-07]** Rasterio 1.5.1 / GDAL 3.12.4 opened the
+131,072-byte prefix of the Hanna event VV asset through `MemoryFile` and read
+the structural/profile metadata, overview factors and SAR tags with Python
+network access blocked. No configured GDAL HTTP proxy connection was observed;
+GDAL received only bytes and a `/vsimem` filename. No larger range or `/vsicurl`
+was needed. This supports the AssetClient-bytes → MemoryFile design for C2
+metadata, not arbitrary COGs or future pixel reads. See the
+[C1 spike](sentinel-stage-c1-rasterio-spike.md) for exact ranges, metadata,
+isolation limits and remaining questions. Production parsing is not implemented.
 
 ### 12.3 Shapely and pyproj — recommended, from the first coverage code
 
@@ -1599,6 +1618,10 @@ Each is a binary check.
 ## 19. Summary — verified, proposed, unresolved
 
 ### 19.1 Verified facts
+
+Historical investigation summary as of 2026-09-06. Its repository/dependency
+state is superseded by the Stage B/C1 implementation results in §12 and the
+current status at the top of this plan.
 
 **Repository:** the acquisition slice is merged and `docs/data-sources.md` is
 committed; `feat/sentinel-raster-preparation` is empty; the package is flat with
