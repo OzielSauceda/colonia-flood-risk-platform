@@ -1,7 +1,8 @@
 # Plan — Sentinel-1 raster preparation
 
-**Status:** Stages A/B/F1/F2 reviewed; Stage C1 MemoryFile spike completed,
-stopped before C2 for review. See `sentinel-stage-c1-rasterio-spike.md` for the
+**Status:** Stages A/B/F1/F2/C1 reviewed; Stage C2 parser and compatibility
+checker implemented, stopped before Stage D for review. See
+`sentinel-stage-c2-review.md` for C2 results and `sentinel-stage-c1-rasterio-spike.md` for the
 bounded-prefix result and dependency versions. Earlier investigation
 measurements below retain their historical context; later stages remain proposed.
 **Investigation date:** 2026-09-06
@@ -1695,7 +1696,11 @@ Three decisions changed in this revision:
   review of diff, tests, call flow, and the engineering concepts involved
   (§17.1). A stage too large to review comfortably gets split.
 
-### 19.3 Unresolved questions
+### 19.3 Historical questions and current resolution status
+
+These questions originated in the 2026-09-06 investigation. Items 2 and 6
+record subsequent F1/F2 and C1/C2 resolutions; their remaining pixel-dependent
+questions are distinguished below. The other questions remain unresolved.
 
 1. **Is ~18% county coverage sufficient for the label prototype?** The primary
    question. No project requirement and no defensible external source supplies a
@@ -1704,26 +1709,31 @@ Three decisions changed in this revision:
    full-coverage orbit 41/107 pre-event scenes and give up strict same-orbit
    comparison; widen the observation window; or reconsider event selection — and
    **none should be chosen silently.**
-2. **Where are the colonias relative to that ~18%?** Still open, but **no longer
-   deferred**: §9.4 brings a precheck into this slice and §17.2 Stage F bounds
-   the answer from vector data alone, before any label work. Two things remain
-   unresolved even after Stage F runs. First, *which colonia boundary source* to
-   adopt — candidate registries disagree about what counts as a colonia, and
-   none was fetched or verified during this investigation; selecting and
-   registering it is Stage F's first task and its likeliest stall point. Second,
-   **the size of the gap between the bound and the true count**, which depends
-   on valid-pixel coverage inside the footprint and is not known until Stage H.
-   §3.4's 99.7%-nodata tile is a warning that the gap may be large.
+2. **Where are the colonias relative to that ~18%? — source and vector precheck
+   resolved by F1/F2.** F1 selected and registered the historical OAG Hidalgo
+   colonia snapshot. F2 found **1,649** colonia-intersecting cells on the fixed
+   500 m lattice, with candidate upper bounds of **418 for Hanna** and **419
+   for March 2025**. Neither is below the fixed ≥20 criterion; neither proves
+   valid observations or passes the gate. Counts are conditional on that named
+   source and vintage, since administrative colonia definitions differ. See
+   [F1](sentinel-stage-f1-source-review.md) and
+   [F2](sentinel-stage-f2-review.md). **Still unresolved until Stage H:** the gap
+   between these geometric upper bounds and valid-observation counts.
+   §3.4's historical 99.7%-nodata tile illustrates why that gap may be large.
 3. **Anonymous SAS rate limits and quota.** Undocumented in the OpenAPI
    document; the human-readable docs are client-side rendered and unfetchable.
 4. **Whether `config/events.toml` windows should change** in light of §4.4. A
    labeling decision; no edit is proposed here.
 5. **The 250 m vs 500 m MVP grid size**, which depends on the unselected DEM and
    rainfall sources. The radar input does not discriminate (§13.2).
-6. **Whether GDAL's `/vsicurl` or the `MemoryFile` route is adopted**, and the
-   network-isolation consequences either way (§15.3). This now binds at **Stage
-   C**, not last, and turns on an untested question: whether rasterio opens a
-   truncated 128 KiB COG header cleanly (§12.2). Stage C settles it empirically
-   before building on it.
+6. **MemoryFile versus `/vsicurl` for metadata — resolved by C1 in favor of
+   bounded bytes → MemoryFile.** C1 opened the tested 128 KiB Hanna VV prefix
+   and read structural metadata without a larger range or observed network
+   request; C2 implements that bytes-only parser. See
+   [C1](sentinel-stage-c1-rasterio-spike.md) and
+   [C2](sentinel-stage-c2-review.md). This resolves the metadata architecture,
+   not all COG layouts or native-network isolation guarantees. **Pixel/window
+   read behavior remains unresolved until Stage H**; metadata-only success
+   does not establish that a truncated prefix supports those reads.
 7. **Scientific suitability** of a two-date pre-event median over this footprint
    — deliberately out of scope, and untouched by this slice.
